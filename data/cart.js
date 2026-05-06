@@ -1,13 +1,26 @@
-export let cart = [{
+
+export let cart = JSON.parse(localStorage.getItem('cart'));
+
+//local stoage can only save strings so it can give us only string version of our cart
+// then we need to convert it back into an array so we use JSON.parse
+
+if (!cart){
+  cart = [{
    productId :
     'e43638ce-6aa0-4b85-b27f-e1d07eb678c6',
-   Quantity : 2,
+   quantity : 2,
 
 },{
     productId: "15b6fc6f-327a-4ec4-896f-486349e85a3d",
-    Quantity : 1,
+    quantity : 1,
 
 }];
+}
+
+
+function saveToStorage (){
+  localStorage.setItem('cart' , JSON.stringify(cart));
+}
 
 export function addToCart(productId){
      let matchingItem;
@@ -26,6 +39,8 @@ export function addToCart(productId){
         quantity: 1
       }
     )};
+    //after update the cart
+    saveToStorage();
     }
 
     export function removeFromcart(productId){
@@ -38,5 +53,7 @@ export function addToCart(productId){
         }
     })
     cart = newCart;
+    //after update the cart
+    saveToStorage();
 
 }
